@@ -32,6 +32,11 @@
         <div class="col">
             <!-- evaluar si la imagen pertenece a Gryffindor, Slytherin u otro -->
             <div class="card border-success mb-3 ms-5" style="max-width: 540px;">
+                {% if img.house == "Gryffindor" %} border: 2.5px solid red;
+                {% elif img.house == "Slytherin" %} border: 2.5px solid green;
+                {% elif img.house == "Ravenclaw" %} border: 2.5px solid blue;
+                {% else %} border: 2.5px solid yellow;
+                {% endif %}">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="{{ img.image }}" class="card-img-top" alt="imagen">

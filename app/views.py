@@ -4,7 +4,8 @@ from django.shortcuts import redirect, render
 from .layers.services import services
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-
+from .layers.services.services import getAllImages
+from .layers.services.services import filterByHouse
 def index_page(request):
     return render(request, 'index.html')
 
@@ -32,14 +33,13 @@ def search(request):
 def filter_by_house(request):
     house = request.POST.get('house', '')
 
-    if house != '':
-        images = [] # debe traer un listado filtrado de imágenes, según la casa.
+    if house:
+        images = filterByHouse(house) # debe traer un listado filtrado de imágenes, según la casa.
         favourite_list = []
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
     else:
         return redirect('home')
-
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
 def getAllFavouritesByUser(request):

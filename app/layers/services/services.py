@@ -1,10 +1,9 @@
 # capa de servicio/lógica de negocio
-import random
 from ..transport import transport
 from ..persistence import repositories
 from ..utilities import translator
 from django.contrib.auth import get_user
-
+import random
 
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de HP.
 def getAllImages():
@@ -36,15 +35,18 @@ def filterByCharacter(name):
 
     return filtered_cards
 
+
+
 # función que filtra las cards según su casa.
 def filterByHouse(house_name):
-    filtered_cards = []
+    filtered_cards = [] 
+    for card in getAllImages():  # Obtener todas las imágenes
+        if card.house and card.house.lower() == house_name.lower():  
+            # Si la casa del personaje coincide con la seleccionada, se añade a la lista
+            filtered_cards.append(card)
 
-    for card in getAllImages():
-        # debe verificar si la casa de la card coincide con la recibida por parámetro. Si es así, se añade al listado de filtered_cards.
-        filtered_cards.append(card)
+    return filtered_cards 
 
-    return filtered_cards
 
 # añadir favoritos (usado desde el template 'home.html')
 def saveFavourite(request):

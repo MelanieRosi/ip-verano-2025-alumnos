@@ -10,12 +10,15 @@ from django.contrib.auth import get_user
 def getAllImages():
     json_collection = transport.getAllImages()
     images = []
-
-    #card = translator.fromRequestIntoCard(object) 
-    
     for item in json_collection:
-        images.append(translator.fromRequestIntoCard(item))
+        card=translator.fromRequestIntoCard(item)
+        if len(card.alternate_names)==0:
+            card.alternate_names="No tiene nombres alternativos"
+        else:
+            card.alternate_names=random.choice(card.alternate_names)
+        images.append(card)
     return images
+
     # debe ejecutar los siguientes pasos:
     # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
     # 2) convertir cada img. en una card.
